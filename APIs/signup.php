@@ -28,8 +28,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       $errores = [];
       if (!isset($_POST['terms'])) {
         $errores[] = 'Tienes que aceptar los términos y condiciones.';
-        
-    }
+     }
       if (!preg_match($nombreExpReg, $nombre)) {
           $errores[] = 'Invalid nombre. Please enter a nombre without special characters.';
       }
@@ -82,30 +81,28 @@ if (empty($errores)) {
   $checkStmt->close();
   $checkResult->close();
 }
-      if (empty($errores)) {
-    $stmt = $conn->prepare("INSERT INTO `usuarios` (`nombre`, `username`, `correo`, `contraseña`, `direccion`, `telefono`) VALUES (?, ?, ?, ?, ?, ?)");
-    if (!$stmt) {
-        die("Prepare failed: " . $conn->error);
-    }
+    if (empty($errores)) {
+        $stmt = $conn->prepare("INSERT INTO `usuarios` (`nombre`, `username`, `correo`, `contraseña`, `direccion`, `telefono`) VALUES (?, ?, ?, ?, ?, ?)");
+        if (!$stmt) {
+            die("Prepare failed: " . $conn->error);
+        }
 
-    $stmt->bind_param("ssssss", $nombre, $username, $correo, $contraseñaHash, $direccion, $telefono);
+        $stmt->bind_param("ssssss", $nombre, $username, $correo, $contraseñaHash, $direccion, $telefono);
 
-    if ($stmt->execute()) {
-        $response['message'] = "Registro correcto";
-    } else {
-        $response['message'] = "Algo ha fallado! Intentalo de nuevo";
-    }
-
+        if ($stmt->execute()) {
+            $response['message'] = "Registro correcto";
+        } else {
+            $response['message'] = "Algo ha fallado! Intentalo de nuevo";
+        }
     $stmt->close();
-  
-      } else {
+    } else {
         $errorString = "";
         foreach ($errores as $error) {
             $errorString .= $error . "\n";
         }
         $response['message'] = $errorString;;
       }
-  }
+    }
 
 } 
 echo json_encode($response);

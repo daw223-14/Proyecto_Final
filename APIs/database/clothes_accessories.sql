@@ -50,24 +50,24 @@ CREATE TABLE `productos` (
   `marca` varchar(50) NOT NULL,
   `precio` decimal(5,2) DEFAULT NULL,
   `cantidadVendido` int(11) DEFAULT NULL,
-  `fechaAñadido` timestamp NOT NULL DEFAULT current_timestamp(),
+  `fechaAñadido` date NOT NULL DEFAULT current_timestamp(),
   `rutaimg` varchar(150) DEFAULT NULL,
   `rutaimghover` varchar(160) DEFAULT NULL,
   `precio_anterior` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 INSERT INTO `productos` (`productoID`, `nombre`, `genero`, `descripcion`, `marca`, `precio`, `cantidadVendido`, `fechaAñadido`, `rutaimg`, `rutaimghover`, `precio_anterior`) VALUES
-(1, 'Nike LD Waffle Sacai Black Nylon', 'hombre', 'Nike LD Waffle Sacai Black Nylon', 'Nike', '401.00', 3, '2023-05-25 00:42:26', 'dist/images/img01.jpg', NULL, NULL),
-(2, 'Nike Dunk Low Off-White Pine Green', 'hombre', 'Nike Dunk Low Off-White Pine Green', 'Nike', '49.99', 10, '2023-05-25 00:54:09', 'dist/images/img02.jpg', NULL, 55),
-(3, 'Nike Air Force 1 Low Supreme Black', 'hombre', 'Nike Air Force 1 Low Supreme Black', 'Nike', '59.99', 3, '2023-05-25 00:54:09', 'dist/images/img03.jpg', NULL, NULL),
-(4, 'Nike LD Waffle Sacai White Nylon', 'hombre', 'Nike LD Waffle Sacai White Nylon', 'Nike', '79.99', 0, '2023-05-25 00:54:09', 'dist/images/img04.jpg', NULL, NULL),
-(5, 'NikNike Dunk Low SP Kentucky (2021)e', 'mujer', 'Nike Dunk Low SP Kentucky (2021)', 'Nike', '39.99', 0, '2023-05-25 00:54:09', 'dist/images/img05.jpg', NULL, NULL),
-(6, 'Nike Dunk Low Off-White University', 'mujer', 'Nike Dunk Low Off-White University', 'Nike', '19.99', 0, '2023-05-25 00:54:09', 'dist/images/img06.jpg', NULL, 0),
-(7, 'Nike Air Max 2 Light Atmos', 'mujer', 'Nike Air Max 2 Light Atmos', 'Nike', '34.99', 0, '2023-05-25 00:54:09', 'dist/images/img07.jpg', NULL, NULL),
-(8, 'Nike Air Force 1 Low CLOT Blue Silk', 'mujer', 'Nike Air Force 1 Low CLOT Blue Silk', 'Nike', '24.99', 5, '2023-05-25 00:54:09', 'dist/images/img08.jpg', NULL, 56),
-(9, 'Nike Air Max 90 OG Volt (2020)', 'niños', 'Nike Air Max 90 OG Volt (2020)', 'Nike', '89.99', 1, '2023-05-25 00:54:09', 'dist/images/img09.jpg', NULL, NULL),
-(10, 'Nike Dunk High Varsity Maize', 'niños', 'Nike Dunk High Varsity Maize', 'Nike', '59.99', 8, '2023-05-25 00:54:09', 'dist/images/img10.jpg', NULL, 88),
-(11, 'Nike Air Rubber Dunk Off-White UNC', 'niños', 'Nike Air Rubber Dunk Off-White UNC', 'Nike', '29.99', 0, '2023-05-25 00:54:09', 'dist/images/img11.jpg', NULL, NULL);
+(1, 'Nike LD Waffle Sacai Black Nylon', 'hombre', 'Nike LD Waffle Sacai Black Nylon', 'Nike', '401.00', 3, '2023-05-25', 'dist/images/img01.jpg', NULL, NULL),
+(2, 'Nike Dunk Low Off-White Pine Green', 'hombre', 'Nike Dunk Low Off-White Pine Green', 'Nike', '49.99', 10, '2023-05-25', 'dist/images/img02.jpg', NULL, 55),
+(3, 'Nike Air Force 1 Low Supreme Black', 'hombre', 'Nike Air Force 1 Low Supreme Black', 'Nike', '59.99', 3, '2023-05-25', 'dist/images/img03.jpg', NULL, NULL),
+(4, 'Nike LD Waffle Sacai White Nylon', 'hombre', 'Nike LD Waffle Sacai White Nylon', 'Nike', '79.99', 0, '2023-05-25', 'dist/images/img04.jpg', NULL, NULL),
+(5, 'NikNike Dunk Low SP Kentucky (2021)e', 'mujer', 'Nike Dunk Low SP Kentucky (2021)', 'Nike', '39.99', 0, '2023-05-25', 'dist/images/img05.jpg', NULL, NULL),
+(6, 'Nike Dunk Low Off-White University', 'mujer', 'Nike Dunk Low Off-White University', 'Nike', '19.99', 0, '2023-05-25', 'dist/images/img06.jpg', NULL, 0),
+(7, 'Nike Air Max 2 Light Atmos', 'mujer', 'Nike Air Max 2 Light Atmos', 'Nike', '34.99', 0, '2023-05-25', 'dist/images/img07.jpg', NULL, NULL),
+(8, 'Nike Air Force 1 Low CLOT Blue Silk', 'mujer', 'Nike Air Force 1 Low CLOT Blue Silk', 'Nike', '24.99', 5, '2023-05-25', 'dist/images/img08.jpg', NULL, 56),
+(9, 'Nike Air Max 90 OG Volt (2020)', 'niños', 'Nike Air Max 90 OG Volt (2020)', 'Nike', '89.99', 1, '2023-05-25', 'dist/images/img09.jpg', NULL, NULL),
+(10, 'Nike Dunk High Varsity Maize', 'niños', 'Nike Dunk High Varsity Maize', 'Nike', '59.99', 8, '2023-05-25', 'dist/images/img10.jpg', NULL, 88),
+(11, 'Nike Air Rubber Dunk Off-White UNC', 'niños', 'Nike Air Rubber Dunk Off-White UNC', 'Nike', '29.99', 0, '2023-05-25', 'dist/images/img11.jpg', NULL, NULL);
 
 CREATE TABLE `subscripciones` (
   `subscripcionID` int(11) NOT NULL,

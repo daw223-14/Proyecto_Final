@@ -25,7 +25,7 @@ function GetProductsForm({handleChange, handleSubmit, search, marca, precio, res
                 type="radio"
                 name="marca"
                 value="nike"
-                checked={marca === "nike"}
+                checked={marca === "Nike"}
                 onChange={handleChange}
               />{" "}
               Nike

@@ -88,9 +88,9 @@ function ClothesAccessoriesPage({genero}) {
       <GetproductosForm
         handleChange={handleChange}
         handleSubmit={handleSubmit}
+        search={formValues.search}
         marca={formValues.marca}
         precio={formValues.precio}
-        search={formValues.search}
         resetOnClick={resetOnClick}
       />
         <section className="products-section products-accessories full-block" id="on-sale">

@@ -5,7 +5,7 @@ import { Link, useNavigate  } from "react-router-dom";
 import { AppContext } from "./AppContext";
 import Notification from "./../components/Notification";
 
-function Insert() {
+function InsertForm() {
   const [formData, setFormData] = useState({
     nombre: "",
     genero: "",
@@ -15,11 +15,11 @@ function Insert() {
     cantidadVendido: "",
     fechaAñadido: "",
     rutaimg: "",
-    rutaimghover: "",
     precio_anterior: ""
   });
   const [errores, setErrores] = useState([]);
   const [message, setMessage] = useState("");
+  const [insertok, setInsertok] = useState(false);
 
   const [showNotification, setShowNotification] = useState(false);
   const [notificationText, setNotificationText] = useState("");
@@ -28,7 +28,7 @@ function Insert() {
     setShowNotification(false);
     setNotificationText("");
     setMessage("");
-    if(signedUp){
+    if(insertok){
       navigate("/admin");
     }
   }; 
@@ -50,16 +50,14 @@ function Insert() {
     return errores;
 }
 
-  const handleChange = (e) => {
-    const { nombre, value, type, checked } = e.target;
-    const newValue = type === "checkbox" ? checked : value;
+const handleChange = (e) => {
+  const { name, value} = e.target;
 
-    setFormData((prevFormData) => ({
-      ...prevFormData,
-      [nombre]: newValue,
-    }));
-  };
-
+  setFormData((prevFormData) => ({
+    ...prevFormData,
+    [name]: value,
+  }));
+};
   const handleSubmit = (e) => {
     e.preventDefault();
   
@@ -85,12 +83,12 @@ function Insert() {
         setMessage(responseData.message);
         setNotificationText(response.data.message);
         setShowNotification(true);
-        if(responseData.message == "Signed up Successfully"){
-          setSignedUp(true);
+        if(responseData.message == "Producto añadido"){
+          setInsertok(true);
         }
       })
       .catch((error) => {
-        console.error("Error submitting the form:", error);
+        console.error("Error al añadir el formulario: ", error);
       });
   };
 
@@ -101,12 +99,11 @@ function Insert() {
     }
   }, [message]);
 
-
   return (
-    <section className="signup full-block">
-      <div className="container signup-content">
-        <h2 className="signup-title">Nuevo producto</h2>
-        <form id="signupForm" className="signup-form" onSubmit={handleSubmit}>
+    <section className="insert full-block">
+      <div className="container insert-content">
+        <h2 className="insert-title">Nuevo producto</h2>
+        <form id="insertForm" className="insert-form" onSubmit={handleSubmit}>
           <div>
             <div>
               <label htmlFor="name">Nombre</label>
@@ -121,16 +118,19 @@ function Insert() {
               />
             </div>
             <div>
-              <label htmlFor="genero">Genero </label>
-              <input
-                id="genero"
-                type="text"
-                placeholder="genero..."
-                name="genero"
-                value={formData.genero}
-                onChange={handleChange}
-                required
-              />
+            <label htmlFor="genero">Género</label>
+            <select
+              id="genero"
+              name="genero"
+              value={formData.genero}
+              onChange={handleChange}
+              required
+            >
+              <option value="">Selecciona el género</option>
+              <option value="mujer">Mujer</option>
+              <option value="hombre">Hombre</option>
+              <option value="niños">Niños</option>
+            </select>
             </div>
           </div>
           <div>
@@ -152,7 +152,7 @@ function Insert() {
                 id="marca"
                 type="text"
                 placeholder="Número de marca..."
-                nombre="marca"
+                name="marca"
                 value={formData.marca}
                 onChange={handleChange}
                 required
@@ -187,15 +187,13 @@ function Insert() {
           </div>
           <div>
             <div>
-              <label htmlFor="fechaAñadido">fechaañadido</label>
+              <label htmlFor="fechaAñadido">Fecha de añadido:</label>
               <input
                 id="fechaAñadido"
-                type="date"
-                placeholder="fechaañadido..."
+                type="text"
                 name="fechaAñadido"
                 value={formData.fechaAñadido}
                 onChange={handleChange}
-                required
               />
             </div>
           </div>
@@ -215,20 +213,6 @@ function Insert() {
           </div>
           <div>
             <div>
-              <label htmlFor="rutaimghover">rutaimghover</label>
-              <input
-                id="rutaimghover"
-                type="text"
-                placeholder="rutaimghover..."
-                name="rutaimghover"
-                value={formData.rutaimghover}
-                onChange={handleChange}
-                required
-              />
-            </div>
-          </div>
-          <div>
-            <div>
               <label htmlFor="precio_anterior">precio_anterior</label>
               <input
                 id="precio_anterior"
@@ -237,12 +221,11 @@ function Insert() {
                 name="precio_anterior"
                 value={formData.precio_anterior}
                 onChange={handleChange}
-                required
               />
             </div>
           </div>
-          <button className="btn btn--form" type="submit" value="Signup">
-            Regístrate
+          <button className="btn btn--form" type="submit" value="Insert">
+            Insertar
           </button>
         </form>
       </div>
@@ -251,5 +234,5 @@ function Insert() {
   );
 }
 
-export default Insert;
+export default InsertForm;
 
