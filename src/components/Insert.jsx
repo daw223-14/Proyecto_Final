@@ -8,17 +8,18 @@ import Notification from "./../components/Notification";
 function Insert() {
   const [formData, setFormData] = useState({
     nombre: "",
-    username: "",
-    correo: "",
-    telefono: "",
-    contraseña: "",
-    contraseña2: "",
-    direccion: "",
-    terminos: false,
+    genero: "",
+    descripcion: "",
+    marca: "",
+    precio: "",
+    cantidadVendido: "",
+    fechaAñadido: "",
+    rutaimg: "",
+    rutaimghover: "",
+    precio_anterior: ""
   });
-  const [errores, serErrores] = useState([]);
-  const [mensaje, setMensaje] = useState("");
-  const [signedUp, setSignedUp] = useState(false);
+  const [errores, setErrores] = useState([]);
+  const [message, setMessage] = useState("");
 
   const [showNotification, setShowNotification] = useState(false);
   const [notificationText, setNotificationText] = useState("");
@@ -26,9 +27,9 @@ function Insert() {
   const closeNotification = () => {
     setShowNotification(false);
     setNotificationText("");
-    setMensaje("");
+    setMessage("");
     if(signedUp){
-      navigate("/login");
+      navigate("/admin");
     }
   }; 
 
@@ -43,38 +44,9 @@ function Insert() {
 
   function validation(){  
     let errores = [];
-    if (!formData.terminos) {
-      errores.push("* Tienes que aceptar los términos y condiciones");
-    }
-  
     if (!/^[a-zA-Z\s]+$/.test(formData.nombre)) {
       errores.push("Nombre Incorrecto. Por favor, introduce un nombre sin carácteres especiales.");
-    }
-  
-    if (!/^[a-zA-Z][a-zA-Z0-9]*$/.test(formData.username)) {
-      errores.push("Invalid username. It must start with a letter and can contain only letters and numbers.");
-    }
-  
-    if (!/^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$/.test(formData.correo) || formData.correo.length > 70) {
-      errores.push("Invalid correo. correo should be a valid direccion and cannot exceed 70 characters.");
-    }
-  
-    if (!/^\d{1,70}$/.test(formData.telefono) || formData.telefono.length > 70) {
-      errores.push("Invalid telefono number. telefono number should only contain digits and cannot exceed 70 characters.");
-    }
-  
-    if (!/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[#$@!%&*?])[A-Za-z\d#$@!%&*?]{8,30}$/.test(formData.contraseña)) {
-      errores.push("Invalid contraseña. contraseña should contain at least 8 characters, including one uppercase letter, one lowercase letter, one number, and one special character.");
-    }
-  
-    if (formData.contraseña !== formData.contraseña2) {
-      errores.push("Passwords do not match.");
-    }
-  
-    if (formData.direccion.length > 128) {
-      errores.push("direccion exceeds the maximum length of 128 characters.");
-    }
-  
+    }  
     return errores;
 }
 
@@ -93,7 +65,7 @@ function Insert() {
   
     const validationErrors = validation();
   
-    serErrores(validationErrors); 
+    setErrores(validationErrors); 
   
     if (validationErrors.length > 0) {
       setNotificationText(validationErrors);
@@ -107,13 +79,13 @@ function Insert() {
     });
   
     axios
-      .post("/signup.php", data)
+      .post("/insert.php", data)
       .then((response) => {
         const responseData = response.data;
-        setMensaje(responseData.mensaje);
-        setNotificationText(response.data.mensaje);
+        setMessage(responseData.message);
+        setNotificationText(response.data.message);
         setShowNotification(true);
-        if(responseData.mensaje == "Signed up Successfully"){
+        if(responseData.message == "Signed up Successfully"){
           setSignedUp(true);
         }
       })
@@ -123,39 +95,39 @@ function Insert() {
   };
 
   useEffect(() => {
-    if (mensaje !== "") {
-      setNotificationText(mensaje);
+    if (message !== "") {
+      setNotificationText(message);
       setShowNotification(true);
     }
-  }, [mensaje]);
+  }, [message]);
 
 
   return (
     <section className="signup full-block">
       <div className="container signup-content">
-        <h2 className="signup-title">Soy nuevo/a</h2>
+        <h2 className="signup-title">Nuevo producto</h2>
         <form id="signupForm" className="signup-form" onSubmit={handleSubmit}>
           <div>
             <div>
-              <label htmlFor="nombre">Nombre</label>
+              <label htmlFor="name">Nombre</label>
               <input
-                id="nombre"
+                id="name"
                 type="text"
                 placeholder="Nombre..."
-                name="name"
+                name="nombre"
                 value={formData.nombre}
                 onChange={handleChange}
                 required
               />
             </div>
             <div>
-              <label htmlFor="username">Nombre de Usuario </label>
+              <label htmlFor="genero">Genero </label>
               <input
-                id="username"
+                id="genero"
                 type="text"
-                placeholder="Nombre de usuario..."
-                name="username"
-                value={formData.username}
+                placeholder="genero..."
+                name="genero"
+                value={formData.genero}
                 onChange={handleChange}
                 required
               />
@@ -163,25 +135,51 @@ function Insert() {
           </div>
           <div>
             <div>
-              <label htmlFor="correo">Correo electrónico </label>
+              <label htmlFor="descripcion">Descripcion </label>
               <input
-                id="correo"
-                type="correo"
-                placeholder="correo..."
-                name="correo"
-                value={formData.correo}
+                id="descripcion"
+                type="text"
+                placeholder="descripcion..."
+                name="descripcion"
+                value={formData.descripcion}
                 onChange={handleChange}
                 required
               />
             </div>
             <div>
-              <label htmlFor="telefono">Teléfono</label>
+              <label htmlFor="marca">marca</label>
               <input
-                id="telefono"
+                id="marca"
+                type="text"
+                placeholder="Número de marca..."
+                nombre="marca"
+                value={formData.marca}
+                onChange={handleChange}
+                required
+              />
+            </div>
+          </div>
+          <div>
+            <div>
+              <label htmlFor="precio">precio</label>
+              <input
+                id="precio"
                 type="number"
-                placeholder="Número de teléfono..."
-                nombre="telefono"
-                value={formData.telefono}
+                placeholder="precio..."
+                name="precio"
+                value={formData.precio}
+                onChange={handleChange}
+                required
+              />
+            </div>
+            <div>
+              <label htmlFor="cantidadVendido">cantidadVendido</label>
+              <input
+                id="cantidadVendido"
+                type="number"
+                placeholder="Repite la precio..."
+                name="cantidadVendido"
+                value={formData.cantidadVendido}
                 onChange={handleChange}
                 required
               />
@@ -189,25 +187,13 @@ function Insert() {
           </div>
           <div>
             <div>
-              <label htmlFor="contraseña">Contraseña</label>
+              <label htmlFor="fechaAñadido">fechaañadido</label>
               <input
-                id="contraseña"
-                type="contraseña"
-                placeholder="Contraseña..."
-                name="contraseña"
-                value={formData.contraseña}
-                onChange={handleChange}
-                required
-              />
-            </div>
-            <div>
-              <label htmlFor="contraseña2">Repita la contraseña</label>
-              <input
-                id="contraseña2"
-                type="contraseña"
-                placeholder="Repite la contraseña..."
-                name="contraseña2"
-                value={formData.contraseña2}
+                id="fechaAñadido"
+                type="date"
+                placeholder="fechaañadido..."
+                name="fechaAñadido"
+                value={formData.fechaAñadido}
                 onChange={handleChange}
                 required
               />
@@ -215,35 +201,45 @@ function Insert() {
           </div>
           <div>
             <div>
-              <label htmlFor="direccion">Dirección</label>
+              <label htmlFor="rutaimg">rutaimg</label>
               <input
-                id="direccion"
+                id="rutaimg"
                 type="text"
-                placeholder="Dirección..."
-                name="direccion"
-                value={formData.direccion}
+                placeholder="rutaimg..."
+                name="rutaimg"
+                value={formData.rutaimg}
                 onChange={handleChange}
                 required
               />
-            </div>
-            <div className="signup_terms">
-              <input
-                id="terminos"
-                type="checkbox"
-                name="terminos"
-                checked={formData.terminos}
-                onChange={handleChange}
-                required
-              />
-              <label htmlFor="terminos">
-                * Términos y condiciones<br /> 
-              </label>
             </div>
           </div>
           <div>
-            <p>
-              ¿Ya tienes cuenta? <Link to={"./../login"}>Iniciar sesión</Link>
-            </p>
+            <div>
+              <label htmlFor="rutaimghover">rutaimghover</label>
+              <input
+                id="rutaimghover"
+                type="text"
+                placeholder="rutaimghover..."
+                name="rutaimghover"
+                value={formData.rutaimghover}
+                onChange={handleChange}
+                required
+              />
+            </div>
+          </div>
+          <div>
+            <div>
+              <label htmlFor="precio_anterior">precio_anterior</label>
+              <input
+                id="precio_anterior"
+                type="text"
+                placeholder="precio_anterior..."
+                name="precio_anterior"
+                value={formData.precio_anterior}
+                onChange={handleChange}
+                required
+              />
+            </div>
           </div>
           <button className="btn btn--form" type="submit" value="Signup">
             Regístrate
