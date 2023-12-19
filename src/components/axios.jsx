@@ -1,5 +1,5 @@
 import axios from "axios";
 
 export default axios.create({
-    baseURL: 'http://localhost/Cycles/APIs'
+    baseURL: 'http://glittery-pegasus-d4037b/Cycles/APIs'
 });
