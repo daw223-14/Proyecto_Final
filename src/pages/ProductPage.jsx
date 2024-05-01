@@ -111,12 +111,11 @@ function ProductPage() {
                       <label htmlFor="">Selecciona una talla:</label>
                       <select id="tallaSelect">
                         <option value="">Seleccionar</option>
-                        <option value="">{producto.tallas}</option>
-                        {/* {producto.talla && producto.tallas.map((talla) => (
+                        {producto.tallas && producto.tallas.map((talla) => (
                           <option key={talla} value={talla}>
                             {talla}
                           </option>
-                        ))} */}
+                        ))}
                       </select>
                     </div>
                   <div className="wishlist-cart">

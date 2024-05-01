@@ -45,10 +45,16 @@ $sql .= " GROUP BY p.productoID";
 $result = $conn->query($sql);
 
 $productos = [];
-
+/* 
 while ($fila = $result->fetch_assoc()) {
     $productos[] = $fila;
-    
+} */
+while ($fila = $result->fetch_assoc()) {
+    $productoID = $fila['productoID'];
+    $tallas = explode(', ', $fila['tallas']); // Convertimos la cadena de tallas en un array
+    unset($fila['tallas']); // Eliminamos la cadena de tallas del array resultante
+    $fila['tallas'] = $tallas; // Agregamos el array de tallas al array resultante
+    $productos[] = $fila;
 }
 /* while ($fila = $result->fetch_assoc()) {
     $productoID = $fila['productoID'];
