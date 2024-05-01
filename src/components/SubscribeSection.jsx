@@ -4,13 +4,13 @@ import axios from "./axios";
 import Notification from "./Notification";
 
 function SubscribeSection() {
-  const [correo, setEmail] = useState("");
+  const [correo, setCorreo] = useState("");
   const [showNotification, setShowNotification] = useState(false);
   const [notificationText, setNotificationText] = useState("");
 
 
   function handleChange(event) {
-    setEmail(event.target.value);
+    setCorreo(event.target.value);
   }
   const closeNotification = () => {
     setShowNotification(false);
@@ -33,7 +33,7 @@ function SubscribeSection() {
         setNotificationText("Something went wrong!")
         console.error(error);
       });
-      setEmail("");
+      setCorreo("");
   }
 
   return (

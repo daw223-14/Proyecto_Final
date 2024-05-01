@@ -17,7 +17,7 @@ function SignupForm() {
     terms: false,
   });
   const [errors, setErrors] = useState([]);
-  const [message, setMessage] = useState("");
+  const [mensaje, setMensaje] = useState("");
   const [signedUp, setSignedUp] = useState(false);
 
   const [showNotification, setShowNotification] = useState(false);
@@ -26,7 +26,7 @@ function SignupForm() {
   const closeNotification = () => {
     setShowNotification(false);
     setNotificationText("");
-    setMessage("");
+    setMensaje("");
     if(signedUp){
       navigate("/login");
     }
@@ -106,10 +106,10 @@ function SignupForm() {
       .post("/signup.php", data)
       .then((response) => {
         const responseData = response.data;
-        setMessage(responseData.message);
-        setNotificationText(response.data.message);
+        setMensaje(responseData.mensaje);
+        setNotificationText(response.data.mensaje);
         setShowNotification(true);
-        if(responseData.message == "Signed up Successfully"){
+        if(responseData.mensaje == "Signed up Successfully"){
           setSignedUp(true);
         }
       })
@@ -119,11 +119,11 @@ function SignupForm() {
   };
 
   useEffect(() => {
-    if (message !== "") {
-      setNotificationText(message);
+    if (mensaje !== "") {
+      setNotificationText(mensaje);
       setShowNotification(true);
     }
-  }, [message]);
+  }, [mensaje]);
 
 
   return (

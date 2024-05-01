@@ -65,8 +65,8 @@ function ContactUs(){
                         </div>
             
                         <div className="form-group">
-                            <label htmlFor="message">Mensaje:</label>
-                            <textarea id="message" value={formData.message} onChange={handleChange} name="message" required></textarea>
+                            <label htmlFor="mensaje">Mensaje:</label>
+                            <textarea id="mensaje" value={formData.message} onChange={handleChange} name="mensaje" required></textarea>
                         </div>        
                         <button type="submit">Enviar</button>
                     </form>

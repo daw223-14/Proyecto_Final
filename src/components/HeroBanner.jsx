@@ -3,8 +3,8 @@ import "../styles/HeroBanner.css"
 
 
 function HeroBanner(){
-    const scrollToSection = (seccionID, targetPosition = 0) => {
-        const section = document.getElementById(seccionID);
+    const scrollToSection = (sectionId, targetPosition = 0) => {
+        const section = document.getElementById(sectionId);
         if (section) {
           if (targetPosition > 0) {
             const targetPosition = section.offsetTop - 100;

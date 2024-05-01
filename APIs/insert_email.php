@@ -5,7 +5,7 @@ $response['mensaje'] = "Lo siento, algo ha ido mal :/!";
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $correo = $_POST['correo'] ?? '';
 
-    $stmt = $conn->prepare("INSERT INTO subscripciones (correo) VALUES (?)");
+    $stmt = $conn->prepare("INSERT INTO subscripciones (correos) VALUES (?)");
     $stmt->bind_param("s", $correo);
     $stmt->execute();
 
@@ -18,4 +18,4 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 echo json_encode($response);
 $conn->close();
-?>
+

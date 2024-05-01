@@ -25,6 +25,7 @@ const CheckoutProducts = () => {
           <p className="product-precio">Precio Unidad: {parseFloat(item.precio).toFixed(2)}€</p>
           <hr className="product-divider" />
           <p className="product-total">Total: {(parseFloat(item.precio) * item.cantidad).toFixed(2)} €</p>
+          
         </div>
       ))}
       <div className="checkout-products-total">

@@ -33,11 +33,12 @@ function ProductsSection({ sectionTitle, sectionPhrase, filter, id }) {
       key={productos.productoID}
       productName={productos.nombre}
       sinStock={false}
-      productId={productos.productoID}
-      productGenero={productos.marca}
+      productoID={productos.productoID}
+      productType={productos.genero}
       precio={productos.precio}
       precio_anterior={productos.precio_anterior}
       sale={true}
+      rutaimg={productos.rutaimg}
     />
   ));
 

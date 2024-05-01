@@ -1,7 +1,7 @@
 <?php
 require_once 'database.php';
 $response = array();
-$response['message'] = "";
+$response['mensaje'] = "";
 $response['loggedin'] = false;
 $response['userInfo'] = array();
 // Check if the form is submitted
@@ -22,20 +22,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if ($resultado->num_rows === 1) {
             $user = $resultado->fetch_assoc();
             if (password_verify($contraseña, $user['contraseña'])) {
-                $response['message'] = "Loggedado";
-                $response['message']['usuarioID'] = $user['usuarioID'];
-                $response['message']['nombre'] = $user['nombre'];
-                $response['message']['username'] = $user['username'];
-                $response['message']['correo'] = $user['correo'];
+                $response['mensaje'] = "Loggedado";
+                $response['userInfo']['usuarioID'] = $user['usuarioID'];
+                $response['userInfo']['nombre'] = $user['nombre'];
+                $response['userInfo']['username'] = $user['username'];
+                $response['userInfo']['correo'] = $user['correo'];
                 $response['loggedin'] = true;
             } else {
-                $response['message'] = "Contraseña incorrecta!";
+                $response['mensaje'] = "Contraseña incorrecta!";
             }
         } else {
-            $response['message'] = "Correo/username incorrectos!";
+            $response['mensaje'] = "Correo/username incorrectos!";
         }
     } else {
-        $response['message'] = "Error ejecutando la sentencia: " . $stmt->error;
+        $response['mensaje'] = "Error ejecutando la sentencia: " . $stmt->error;
     }
     $stmt->close();
 }

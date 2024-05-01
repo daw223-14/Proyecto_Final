@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import "./../styles/GetProductsForm.css";
 
 function GetProductsForm({handleChange, handleSubmit, search, marca, precio, resetOnClick}) {
@@ -8,24 +8,24 @@ function GetProductsForm({handleChange, handleSubmit, search, marca, precio, res
       <div className="container clothes-accessories-content">
         <form className="clothes-accessories-form" onSubmit={handleSubmit}>
           <div className="clothes-accessories-group">
-            <label htmlFor="search">Search Product:</label>
+            <label htmlFor="search">Buscador:</label>
             <input
               id="search"
               type="text"
-              placeholder="Search"
+              placeholder="Buscar..."
               name="search"
               value={search}
               onChange={handleChange}
             />
           </div>
           <div className="clothes-accessories-group">
-            <label htmlFor="marca">marca:</label>
+            <label htmlFor="marca">Marca:</label>
             <label>
               <input
                 type="radio"
                 name="marca"
                 value="nike"
-                checked={marca === "Nike"}
+                checked={marca === "nike"}
                 onChange={handleChange}
               />{" "}
               Nike
@@ -52,13 +52,13 @@ function GetProductsForm({handleChange, handleSubmit, search, marca, precio, res
             </label>
           </div>
           <div className="clothes-accessories-group">
-            <label htmlFor="precio">Sort by precio</label>
+            <label htmlFor="precio">Ordenar por precio</label>
             <input
               type="range"
               id="precio"
               name="precio"
               min="10"
-              max="1000"
+              max="500"
               step="10"
               value={precio}
               onChange={handleChange}
@@ -70,8 +70,8 @@ function GetProductsForm({handleChange, handleSubmit, search, marca, precio, res
             className="getProductsBtns"
             onClick={resetOnClick}
           />
-          <button className="btn btn--form getProductsBtns"   type="submit" value="Search">
-            Search
+          <button className="btn btn--form getProductsBtns"   type="submit" value="Buscar">
+            Buscar
           </button>
         </form>
       </div>

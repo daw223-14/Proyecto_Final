@@ -4,16 +4,16 @@ import ProductCard from "./../components/ProductCard";
 
 
 function Cart(){
-    const { cartItems, setCartItems } = useContext(
+    const { carritoItems, seCarritoItems } = useContext(
         AppContext
       );
-    let productsToRender = cartItems.map(product => {
+    let productsToRender = carritoItems.map(product => {
         return (<ProductCard
-                  key={product.productId}
+                  key={product.productoID}
                   productName={product.nombreProducto}
                   sinStock={false}
-                  productId={product.productId}
-                  productGenero={product.genero}
+                  productoID={product.productoID}
+                  productType={product.genero}
                   precio={product.precio}
                   precio_anterior={product.precio_anterior}
                   cart={true}

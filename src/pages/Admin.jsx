@@ -1,11 +1,16 @@
-import React from "react";
-import Insert from "../components/Insert";
+import React, {useContext} from "react";
+import { Navigate } from "react-router-dom";
+import Administrador from "../components/Administrador";
+import {AppContext} from "./../components/AppContext";
 
 function Signup(){
-    return (
+    const { isUserLogged } = useContext(AppContext);
+    return isUserLogged ? (
         <main className="full-block">
-            <Insert />
+            <Administrador />
         </main>
+    ) : (
+        <Navigate to="/loginAdmin" />
     )
 }
 

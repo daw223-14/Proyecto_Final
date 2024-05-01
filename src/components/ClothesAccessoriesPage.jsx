@@ -7,15 +7,15 @@ function ClothesAccessoriesPage({genero}) {
   const [formValues, setFormValues] = useState({
     search: "",
     marca: "",
-    precio: 1000,
+    precio: 500
   });
   const [productos, setProductos] = useState([]);
 
   const handleChange = (event) => {
-    const { nombre, value } = event.target;
+    const { name, value } = event.target;
     setFormValues((prevValues) => ({
       ...prevValues,
-      [nombre]: value,
+      [name]: value
     }));
   };
 
@@ -23,7 +23,7 @@ function ClothesAccessoriesPage({genero}) {
     setFormValues({
       search: "",
       marca: "",
-      precio: 1000,
+      precio: 500,
     })
     fetchData();
   }
@@ -37,8 +37,8 @@ function ClothesAccessoriesPage({genero}) {
           genero: genero,
           marca: formValues.marca,
           precio: formValues.precio,
-          nombre: formValues.search,
-        },
+          nombre: formValues.search
+        }
       });
       setProductos(response.data);
     } catch (error) {
@@ -56,7 +56,7 @@ function ClothesAccessoriesPage({genero}) {
       const response = await axios.get("/api.php", {
         params: {
           genero: genero
-        },
+        }
       });
       setProductos(response.data);
     } catch (error) {
@@ -69,10 +69,11 @@ function ClothesAccessoriesPage({genero}) {
               key={product.productoID}
               productName={product.nombre}
               sinStock={false}
-              productId={product.productoID}
-              productGenero={product.marca}
+              productoID={product.productoID}
+              productType={product.marca}
               precio={product.precio}
               precio_anterior={product.precio_anterior}
+              rutaimg={product.rutaimg}
             />)
   })
   let titulo;
@@ -88,9 +89,9 @@ function ClothesAccessoriesPage({genero}) {
       <GetproductosForm
         handleChange={handleChange}
         handleSubmit={handleSubmit}
-        search={formValues.search}
         marca={formValues.marca}
         precio={formValues.precio}
+        search={formValues.search}
         resetOnClick={resetOnClick}
       />
         <section className="products-section products-accessories full-block" id="on-sale">

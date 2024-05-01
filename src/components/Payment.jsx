@@ -26,15 +26,15 @@ function Payment({ userData }) {
   const createOrder = async (data, actions) => {
     try {
         const productoIDyCantidades = checkoutCartItems.map((item) => ({
-            productId: item.productId,
+            productoID: item.productoID,
             cantidad: item.cantidad
         }));
       
      const response = await axios.post('/checkout.php', {
-            name: userData.name,
-            email: userData.email,
-            phoneNumber: userData.phoneNumber,
-            address: userData.address,
+            nombre: userData.nombre,
+            correo: userData.correo,
+            telefono: userData.telefono,
+            direccion: userData.direccion,
             productoIDyCantidades: productoIDyCantidades
         }, {
             headers: {
@@ -42,13 +42,13 @@ function Payment({ userData }) {
             }
         }
         )
-        const cantidadTotal = parseFloat(response.data.cantidadTotal).toFixed(2);;
+        const totalAmount = parseFloat(response.data.totalAmount).toFixed(2);;
         return actions.order.create({
             purchase_units: [
                 {
                     amount: {
-                        currency_code: "€",
-                        value: cantidadTotal,
+                        currency_code: "USD",
+                        value: totalAmount,
                     },
                 },
             ],
@@ -62,7 +62,7 @@ function Payment({ userData }) {
 const onApprove = async (data, actions) => {
     try {  
     const productoIDyCantidades = checkoutCartItems.map((item) => ({
-        productId: item.productId,
+        productoID: item.productoID,
         cantidad: item.cantidad
     }));
      const response = await axios.post('/order.php', {
@@ -77,7 +77,7 @@ const onApprove = async (data, actions) => {
             }
         }
         )
-        setNotificationText(response.data.message);
+        setNotificationText(response.data.mensaje);
         setShowNotification(true);
         setCheckoutCartItems([]);
         setCarritoItems([])

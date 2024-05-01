@@ -18,7 +18,7 @@ const Notification = ({ text, onClose, show}) => {
       <div className="notification-container">
         <div className="notification-popup">
           <button className="close-button" onClick={closeNotification}>
-            X
+            x
           </button>
           <div className="notification-content">
             <p>{text}</p>

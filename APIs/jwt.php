@@ -30,6 +30,3 @@ function verifyJwtToken($jwtToken) {
       return null;
   }
 }
-
-
-?>

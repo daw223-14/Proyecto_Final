@@ -3,14 +3,11 @@ import { NavLink } from 'react-router-dom';
 import { AppContext } from "./AppContext";
 
 export default function SecondContent() {
-    const { isUserLogged, setIsUserLogged, handleLogout } = useContext(AppContext);
-  const isUserLoggedLS = localStorage.getItem("isUserLogged") === "true";
-  function logOut(){
-      localStorage.setItem("isUserLogged", false)
-      localStorage.setItem("user", null);
-      handleLogout();
-  }
-        
+  const { isUserLogged, handleLogout } = useContext(AppContext);
+  const logOut = () => {
+    localStorage.removeItem('token'); // Eliminar el token del localStorage
+    handleLogout(); // Actualizar el estado de autenticación en el contexto
+  };
   return (
         <div className="collapse navbar-collapse order-5 order-lg-3" id="navbarMenu2">
           <ul className="navbar-nav ml-auto position-relative">
@@ -22,39 +19,8 @@ export default function SecondContent() {
               </a>
               <div className="dropdown-menu" aria-labelledby="navbarDropdown-4">
                 <div className="form-group">
-                <input
-                type="text"
-                placeholder='Search'
-                />
+                  <input type="text" placeholder='Search' />
                 </div>
-              </div>
-            </li>
-
-            <li className="d-none d-lg-inline nav-item dropdown dropdown-md dropdown-hover">
-              <a className="nav-icon" id="navbarDropdown-5" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i className="icon-globe"></i></a>
-              <div className="dropdown-menu" aria-labelledby="navbarDropdown-5">
-                <fieldset>
-                  <div className="row">
-                    <div className="col-12">
-                      <div className="select-frame">
-                        <select className="custom-select custom-select-lg" id="countrySelect1">
-                          <option value="1">United States</option>
-                          <option value="2">Español</option>
-                        </select>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="row">
-                    <div className="col-12">
-                      <div className="select-frame">
-                        <select className="custom-select custom-select-lg" id="curencySelect1">
-                          <option value="1">USD</option>
-                          <option value="2">EUR</option>
-                        </select>
-                      </div>
-                    </div>
-                  </div>
-                </fieldset>
               </div>
             </li>
 
@@ -68,23 +34,31 @@ export default function SecondContent() {
                   <div className="col-12">
                     <nav>
                       <ul>
-                  {!isUserLoggedLS && <li>
-                  <NavLink className="page"  to="/login">Iniciar Sesión</NavLink>                 
-                  </li>}
-                  {!isUserLoggedLS && <li>
-                  <NavLink className="page"  to="/signup">Registrate</NavLink>                   
-                  </li>}
-                  {(isUserLogged || isUserLoggedLS) && <li>
-                  <NavLink to="/" onClick={logOut}  className="custom-active-class">Salir</NavLink>                     
-                  </li>}
-                  {(isUserLogged || isUserLoggedLS) && <li>
-                  <span className="navlinkName">Bienvenido {JSON.parse(localStorage.getItem("user"))}</span>                     
-                  </li>}
-                    <div className="col-12 text-center">
-                    <a href="#" className="underline fs-14">¿Olvidaste tu contraseña?</a>
-                  </div>
-                  </ul>
-                  </nav>
+                      {!isUserLogged && (
+                        <>
+                          <li>
+                            <NavLink className="page" to="/login">Iniciar Sesión</NavLink>
+                          </li>
+                          <li>
+                            <NavLink className="page" to="/signup">Regístrate</NavLink>
+                          </li>
+                        </>
+                      )}
+                      {isUserLogged && (
+                        <>
+                          <li>
+                            <span className="navlinkName">¡Bienvenido!</span>
+                          </li>
+                          <li>
+                            <NavLink to="/" onClick={logOut} className="custom-active-class">Cerrar Sesión</NavLink>
+                          </li>
+                        </>
+                      )}
+                      <div className="col-12 text-center">
+                        <a href="#" className="underline fs-14">¿Olvidaste tu contraseña?</a>
+                      </div>
+                      </ul>
+                      </nav>
                   </div>
                 </div>
               </div>
@@ -94,7 +68,7 @@ export default function SecondContent() {
                 <NavLink to="/checkout" id="navbarDropdown-8" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <div className="nav-icon" id="navbarDropdown-6" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <i className="icon-shopping-bag d-none d-lg-inline-block"></i>
-                    <span className="d-inline-block d-lg-none">Bag</span>
+                    <span className="d-inline-block d-lg-none">Cesta</span>
                     </div>
                 </NavLink>                      
             </li>

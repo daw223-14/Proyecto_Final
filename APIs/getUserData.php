@@ -3,8 +3,8 @@ require_once 'database.php';
 require_once 'jwt.php';
 
 $response = array();
-$response['message'] = "";
-$response['user'] = null;
+$response['mensaje'] = "";
+$response['usuario'] = null;
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $token = $_POST['token'];
@@ -25,21 +25,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $result = $stmt->get_result();
 
             if ($result->num_rows === 1) {
-                $user = $result->fetch_assoc();
-                $response['message'] = "Usuario encontrado";
-                $response['user'] = $user;
+                $usuario = $result->fetch_assoc();
+                $response['mensaje'] = "Usuario encontrado";
+                $response['usuario'] = $usuario;
             } else {
-                $response['message'] = "user no encontrado!";
+                $response['mensaje'] = "usuario no encontrado!";
             }
         } else {
-            $response['message'] = "Error al ejecutar la sentencia: " . $stmt->error;
+            $response['mensaje'] = "Error al ejecutar la sentencia: " . $stmt->error;
         }
         $stmt->close();
     } else {
-        $response['message'] = "Token invalido";
+        $response['mensaje'] = "Token invalido";
     }
 } else {
-    $response['message'] = "Método de solicitud no admitido.";
+    $response['mensaje'] = "Método de solicitud no admitido.";
 }
 
 echo json_encode($response);

@@ -1,47 +1,36 @@
 <?php
 require_once 'database.php';
-if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
-    header("Access-Control-Allow-Origin: *");
-    header("Access-Control-Allow-Methods: POST, GET, OPTIONS");
-    header("Access-Control-Allow-Headers: Content-Type");
-    header("Access-Control-Max-Age: 86400");
-    header("Content-Length: 0");
-    header("HTTP/1.1 204 No Content");
-    exit();
-}
 // Check if the userData properties are not empty
 $response = array();
-$response['message'] = "";
-$response['products'] = "";
+$response['mensaje'] = "";
+$response['productos'] = "";
 $response['totalAmount'] = "";
 $userData = array();
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $name = trim($_POST['name']);
-    $email = trim($_POST['email']);
-    $phoneNumber = trim($_POST['phoneNumber']);
-    $address = trim($_POST['address']);
-    $products = $_POST['productoIDyCantidades'];
+    $nombre = trim($_POST['nombre']);
+    $correo = trim($_POST['correo']);
+    $telefono = trim($_POST['telefono']);
+    $direccion = trim($_POST['direccion']);
+    $productos = $_POST['productoIDyCantidades'];
 
     // Process and use the data as needed
     // For example, you can create an array with the user data
     $userData = [
-        'name' => $name,
-        'email' => $email,
-        'phoneNumber' => $phoneNumber,
-        'address' => $address
+        'nombre' => $nombre,
+        'correo' => $correo,
+        'telefono' => $telefono,
+        'direccion' => $direccion
     ];
-    $response['message'] = $userData;
-    $response['products'] = $products;
+    $response['mensaje'] = $userData;
+    $response['productos'] = $productos;
 }
 
-
-
 if (
-    empty($userData['name']) ||
-    empty($userData['email']) ||
-    empty($userData['phoneNumber']) ||
-    empty($userData['address'])
+    empty($userData['nombre']) ||
+    empty($userData['correo']) ||
+    empty($userData['telefono']) ||
+    empty($userData['direccion'])
 ) {
     http_response_code(400);
     $response = [
@@ -52,15 +41,14 @@ if (
     exit();
 }
 
-
 $totalAmount = 0;
 
-foreach ($products as $product) {
-    $productId = intval($product['productId']);
+foreach ($productos as $product) {
+    $productoID = intval($product['productoID']);
     $cantidad = intval($product['cantidad']);
 
     // Retrieve product price from the database
-    $sql = "SELECT precio FROM productos WHERE productoID = $productId";
+    $sql = "SELECT precio FROM productos WHERE productoID = $productoID";
     $result = $conn->query($sql);
 
     if ($result->num_rows > 0) {
@@ -68,15 +56,10 @@ foreach ($products as $product) {
         $productPrice = $row['precio'];
         $totalAmount += $productPrice * $cantidad;
     }
-    }
+}
 
-
-    $response['totalAmount'] = $totalAmount;
-
-
-header("Content-Type: application/json");
+$response['totalAmount'] = $totalAmount;
 echo json_encode($response);
 
 $conn->close();
 
-?>

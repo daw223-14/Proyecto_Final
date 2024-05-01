@@ -1,6 +1,6 @@
 <?php
 $host = "localhost";
-$dbname = "dbEcommerce";
+$dbname = "cycle";
 $username = "root";
 $password = "";
 

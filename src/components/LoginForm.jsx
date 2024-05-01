@@ -9,14 +9,15 @@ function LoginForm(){
     const [formData, setFormData] = useState({
         login_usuario_correo: "",
         login_contraseña: ""
-      });
+    });
     const { isUserLogged, setIsUserLogged, handleLoginToken } = useContext(
       AppContext
     );
     
     const [showNotification, setShowNotification] = useState(false);
     const [notificationText, setNotificationText] = useState("");
-  
+    const navigate  = useNavigate();
+
     const closeNotification = () => {
       setShowNotification(false);
       setNotificationText("");
@@ -24,8 +25,6 @@ function LoginForm(){
         navigate("/");
       }
     }; 
-
-    const navigate  = useNavigate();
     
     useEffect(() => {
       if (isUserLogged && !showNotification) {
@@ -34,7 +33,7 @@ function LoginForm(){
     }, [isUserLogged, navigate, showNotification]);
 
     const handleChange = (e) => {
-        const { name, value} = e.target;
+        const { name, value } = e.target;
     
         setFormData((prevFormData) => ({
           ...prevFormData,
@@ -53,14 +52,14 @@ function LoginForm(){
         axios
           .post("/login2.php", data)
           .then((response) => {
-            const loggeado = JSON.parse(response.data.loggeado);
-            setIsUserLogged(loggeado);
-            localStorage.setItem("isUserLogged", loggeado);
-            setNotificationText(response.data.message);
+            const loggedIn = JSON.parse(response.data.loggedin);
+            setIsUserLogged(loggedIn);
+            localStorage.setItem("isUserLogged", loggedIn);
+            setNotificationText(response.data.mensaje);
             setShowNotification(true);
-            if (loggeado) {
+            if (loggedIn) {
               handleLoginToken(response.data.token);
-              localStorage.setItem("usuarios", JSON.stringify(response.data.user));
+              localStorage.setItem("user", JSON.stringify(response.data.user));
             }
           })
           .catch((error) => {

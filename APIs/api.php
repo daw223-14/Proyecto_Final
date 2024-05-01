@@ -1,7 +1,11 @@
 <?php
 require_once 'database.php';
 
-$sql = "SELECT * FROM productos WHERE 1=1";
+$sql = "SELECT p.*, GROUP_CONCAT(t.talla SEPARATOR ', ') AS tallas
+        FROM productos p
+        LEFT JOIN infoProductos ip ON p.productoID = ip.productoID
+        LEFT JOIN tallas t ON ip.tallaID = t.tallaID
+        WHERE 1=1";
 
 $filters = [];
 $marca = $_GET['marca'] ?? '';
@@ -9,65 +13,50 @@ $genero = $_GET['genero'] ?? '';
 $precio = $_GET['precio'] ?? '';
 $nombre = $_GET['nombre'] ?? '';
 $cantidadVendido = $_GET['cantidadVendido'] ?? '';
-$productId = $_GET['productId'] ?? '';
+$productoID = $_GET['productoID'] ?? '';
 
 if (!empty($marca)) {
-    $filters[] = "marca = '" . $conn->real_escape_string($marca) . "'";
+    $filters[] = "p.marca = '" . $conn->real_escape_string($marca) . "'";
 }
 if (!empty($genero)) {
-    $filters[] = "genero = '" . $conn->real_escape_string($genero) . "'";
+    $filters[] = "p.genero = '" . $conn->real_escape_string($genero) . "'";
 }
 
 if (!empty($precio)) {
-    $filters[] = "precio <= " . floatval($precio);
+    $filters[] = "p.precio <= " . floatval($precio);
 }
-if (!empty($productId)) { // Add this block to filter by productId
-    $filters[] = "productoID = " . intval($productId);
+if (!empty($productoID)) { // Add this block to filter by productoID
+    $filters[] = "p.productoID = " . intval($productoID);
 }
 if (!empty($nombre)) {
-    $filters[] = "(nombre LIKE '%" . $conn->real_escape_string($nombre) . "%' OR description LIKE '%" . $conn->real_escape_string($nombre) . "%')";
+    $filters[] = "(p.nombre LIKE '%" . $conn->real_escape_string($nombre) . "%' OR p.descripcion LIKE '%" . $conn->real_escape_string($nombre) . "%')";
 }
 
 if (!empty($cantidadVendido)) {
-    $filters[] = "cantidadVendido >= " . intval($cantidadVendido);
+    $filters[] = "p.cantidadVendido >= " . intval($cantidadVendido);
 }
 
 if (!empty($filters)) {
     $sql .= " AND " . implode(" AND ", $filters);
 }
 
-$sort = $_GET['sort'] ?? '';
-
-switch ($sort) {
-    case 'cantidadVendido':
-        $sql .= " ORDER BY cantidadVendido DESC";
-        break;
-    case 'fechaAñadido':
-        $sql .= " ORDER BY fechaAñadido DESC";
-        break;
-    case 'descuento':
-        $sql .= " AND precio_anterior > precio AND precio_anterior IS NOT NULL ORDER BY (1 - (precio / precio_anterior)) DESC";
-        break;
-    default:
-        $sql .= " ORDER BY productoID DESC";
-        break;
-}
-
-$limit = isset($_GET['limit']) ? intval($_GET['limit']) : null;
-
-if ($limit !== null) {
-    $sql .= " LIMIT " . $limit;
-}
+$sql .= " GROUP BY p.productoID";
 
 $result = $conn->query($sql);
 
 $productos = [];
+
 while ($fila = $result->fetch_assoc()) {
     $productos[] = $fila;
+    
 }
+/* while ($fila = $result->fetch_assoc()) {
+    $productoID = $fila['productoID'];
+    $fila['tallas'] = explode(',', $fila['tallas']); // Convertimos la cadena de tallas en un array
+    $productos[$productoID] = $fila;
+} */
 
 $conn->close();
 
 header("Content-type: application/json");
 echo json_encode($productos);
-?>

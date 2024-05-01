@@ -10,9 +10,9 @@ function Home(){
         <main className="full-block">
             <HeroBanner />
             <DiscoverSection />
-            <ProductsSection sectionTitle="Special offers" sectionPhrase="Exclusive Deals and Discounts" filter="sale_percentage" id="on-sale"/>
-            <ProductsSection sectionTitle="Popular items" sectionPhrase="Trending products flying off the shelves" filter="cantidadVendido" id="popular_items"/>
-            <ProductsSection sectionTitle="Recent releases" sectionPhrase="The most recent additions to our collection" filter="fechaAñadido" id="recent_releases"/>
+            <ProductsSection sectionTitle="Ofertas Especiales" sectionPhrase="Ofertas y descuentos exclusivos" filter="sale_percentage" id="on-sale"/>
+            <ProductsSection sectionTitle="Top Ventas" sectionPhrase="Zapatillas más vendidas en 2024" filter="cantidadVendido" id="popular_items"/>
+            <ProductsSection sectionTitle="Últimos Lanzamientos" sectionPhrase="Últimos lanzamientos en 2024" filter="fechaAñadido" id="recent_releases"/>
             <SubscribeSection />
             
         </main>

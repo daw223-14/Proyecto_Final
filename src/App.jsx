@@ -13,16 +13,17 @@ import ProductPage from './pages/ProductPage';
 import Checkout from './pages/Checkout';
 import Niños from './pages/Niños';
 import Hombre from './pages/Hombre';
-import Admin from './pages/Admin';
-
+import LoginAdmin from './components/LoginAdmin';
+import AdminComponent from './pages/Admin';
+import useAuthVerification from './components/useAuthVerification';
 
 function App() {
   const location = useLocation();
-
+  useAuthVerification();
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [location]);
-
+  
   return (
     <>
       <Navbar />
@@ -34,10 +35,11 @@ function App() {
         <Route path="/contactus" element={<ContactUs />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
-        <Route path="/admin" element={<Admin />} />
+        <Route path="/loginAdmin" element={<LoginAdmin />} />
+        <Route path="/admin" element={<AdminComponent />} />
         <Route path="/cart" element={<Cart />} />
         <Route path="/checkout" element={<Checkout />} />
-        <Route path="/producto/:productId" element={<ProductPage />} />
+        <Route path="/producto/:productoID" element={<ProductPage />} />
       </Routes>
       <br />
       <Footer />

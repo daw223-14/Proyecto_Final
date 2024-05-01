@@ -4,11 +4,11 @@ function CheckoutUserData (props){
   return (
     <form className='checkoutForm'>
       <label>
-        Name:
+        Nombre:
         <input
           type="text"
-          name="name"
-          value={props.name}
+          name="nombre"
+          value={props.nombre}
           onChange={props.handleInputChange}
         />
       </label>
@@ -17,27 +17,27 @@ function CheckoutUserData (props){
         Email:
         <input
           type="email"
-          name="email"
-          value={props.email}
+          name="correo"
+          value={props.correo}
           onChange={props.handleInputChange}
         />
       </label>
       <br />
       <label>
-        Phone Number:
+        Telefono:
         <input
           type="tel"
-          name="phoneNumber"
-          value={props.phoneNumber}
+          name="telefono"
+          value={props.telefono}
           onChange={props.handleInputChange}
         />
       </label>
       <br />
       <label>
-        Address:
+        Direccion:
         <textarea
-          name="address"
-          value={props.address}
+          name="direccion"
+          value={props.direccion}
           onChange={props.handleInputChange}
         />
       </label>

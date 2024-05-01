@@ -8,15 +8,15 @@ import { AppContext } from "./../components/AppContext";
 
 function Checkout(){
     const [userData, setUserData] = useState({
-        name: '',
-        email: '',
-        phoneNumber: '',
-        address: ''
-      });
-      const { cartItems, setCartItems } = useContext(AppContext);
-      localStorage.setItem("cartItems", JSON.stringify(cartItems));
+        nombre: '',
+        correo: '',
+        telefono: '',
+        direccion: ''
+    });
+    const { carritoItems, setCarritoItems } = useContext(AppContext);
+    localStorage.setItem("carritoItems", JSON.stringify(carritoItems));
       
-      const token = localStorage.getItem('token');
+    const token = localStorage.getItem('token');
 
       useEffect(() => {
         if (token) {
@@ -28,8 +28,8 @@ function Checkout(){
             })
             .then((response) => {
               console.log(response)
-              if (response.data.message === "User found") {
-                setUserData(response.data.user);
+              if (response.data.mensaje === "Usuario encontrado") {
+                setUserData(response.data.usuario);
               }
             })
             .catch((error) => {
@@ -50,8 +50,8 @@ function Checkout(){
         <main className="full-block">
             <div className="checkoutContainer">
                 <div className="checkoutFlex">
-                    <CheckoutUserData handleInputChange={handleInputChange} name={userData.name}
-                        email={userData.email} phoneNumber={userData.phoneNumber} address={userData.address} 
+                    <CheckoutUserData handleInputChange={handleInputChange} nombre={userData.nombre}
+                        correo={userData.correo} telefono={userData.telefono} direccion={userData.direccion} 
                     />
                     <CheckoutProducts />
                 </div>

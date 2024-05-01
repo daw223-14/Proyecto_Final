@@ -2,7 +2,7 @@
 require_once 'database.php';
 
 $response = array();
-$response['message'] = "Algo ha salido mal :/!";
+$response['mensaje'] = "Algo ha salido mal :/!";
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $nombre = $_POST['nombre'];
@@ -52,13 +52,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $response = [
         "pedidoID" => $pedidoID,
-        "message" => "Pedido realizado. Pronto contactaremos contigo...",
+        "mensaje" => "Pedido realizado. Pronto contactaremos contigo...",
     ];
     echo json_encode($response);
 } else {
     http_response_code(405); 
     $response = [
-        "message" => "Método de solicitud no admitido.",
+        "mensaje" => "Método de solicitud no admitido.",
     ];
     echo json_encode($response);
 }

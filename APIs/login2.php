@@ -1,10 +1,10 @@
 <?php
 require_once 'database.php';
-require_once 'jwt.php'; 
+require_once 'jwt.php';
 
 $response = array();
-$response['message'] = "";
-$response['loggeado'] = false;
+$response['mensaje'] = "";
+$response['loggedin'] = false;
 $response['usuarios'] = null;
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -24,8 +24,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if ($resultado->num_rows === 1) {
             $usuarios = $resultado->fetch_assoc();
             if (password_verify($contraseña, $usuarios['contraseña'])) {
-                $response['message'] = "Bienvendio " . $usuarios['username'];
-                $response['loggeado'] = true;
+                $response['mensaje'] = "Bienvendio " . $usuarios['username'];
+                $response['loggedin'] = true;
 
                 $tokenPayload = array(
                     'username' => $usuarios['username'],
@@ -42,16 +42,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     'nombre' => $usuarios['nombre'],
                 );
             } else {
-                $response['message'] = "Contraseña incorrecta!";
+                $response['mensaje'] = "Contraseña incorrecta!";
             }
         } else {
-            $response['message'] = "Correo/username incorrecto!";
+            $response['mensaje'] = "Correo/username incorrecto!";
         }
     } else {
-        $response['message'] = "Algo salió mal. Por favor, vuelve a intentarlo.";
+        $response['mensaje'] = "Algo salió mal. Por favor, vuelve a intentarlo.";
     }
     $stmt->close();
 }
 
 echo json_encode($response);
-?>
