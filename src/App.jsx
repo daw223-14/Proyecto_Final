@@ -7,7 +7,6 @@ import Mujer from './pages/Mujer';
 import ContactUs from './pages/ContactUs';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
-import Cart from './pages/Cart';
 import Footer from './components/Footer';
 import ProductPage from './pages/ProductPage';
 import Checkout from './pages/Checkout';
@@ -37,7 +36,6 @@ function App() {
         <Route path="/signup" element={<Signup />} />
         <Route path="/loginAdmin" element={<LoginAdmin />} />
         <Route path="/admin" element={<AdminComponent />} />
-        <Route path="/cart" element={<Cart />} />
         <Route path="/checkout" element={<Checkout />} />
         <Route path="/producto/:productoID" element={<ProductPage />} />
       </Routes>

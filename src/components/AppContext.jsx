@@ -1,4 +1,4 @@
-import React, { createContext, useState, useMemo } from "react";
+import React, { createContext, useState, useMemo, useEffect } from "react";
 
 //cambiar los nombres para hacer uno solo para usuario regular y otro para superusuario
 const AppContext = createContext();
@@ -11,6 +11,10 @@ const AppProvider = ({ children }) => {
   const [isUserLogged, setIsUserLogged] = useState(false);
   const [token, setToken] = useState(initialToken);
   const [carritoItems, setCarritoItems] = useState(initialCarritoItems);
+
+  useEffect(() => {
+    localStorage.setItem("carritoItems", JSON.stringify(carritoItems));
+  }, [carritoItems]);
 
   const handleLogout = () => {
     setIsUserLogged(false);

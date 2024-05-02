@@ -19,9 +19,8 @@ function Payment({ userData }) {
   }; 
 
   useEffect(() => {
-    const carritoItemsData = JSON.parse(localStorage.getItem("carritoItems"));
-    setCheckoutCartItems(carritoItemsData);
-  }, []);
+    setCheckoutCartItems(carritoItems);
+  }, [carritoItems]);
 
   const createOrder = async (data, actions) => {
     try {

@@ -14,7 +14,9 @@ function Checkout(){
         direccion: ''
     });
     const { carritoItems, setCarritoItems } = useContext(AppContext);
-    localStorage.setItem("carritoItems", JSON.stringify(carritoItems));
+    useEffect(() => {
+      localStorage.setItem("carritoItems", JSON.stringify(carritoItems));
+    }, [carritoItems]);
       
     const token = localStorage.getItem('token');
 
@@ -27,7 +29,6 @@ function Checkout(){
               },
             })
             .then((response) => {
-              console.log(response)
               if (response.data.mensaje === "Usuario encontrado") {
                 setUserData(response.data.usuario);
               }

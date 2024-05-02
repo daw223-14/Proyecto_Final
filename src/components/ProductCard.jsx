@@ -1,25 +1,17 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useContext } from "react";
 import "../styles/ProductCard.css";
 import { useNavigate } from "react-router-dom";
 import { AppContext } from "./AppContext";
 
-function ProductCard({ productoID, productName, sinStock, productType, precio, precio_anterior, rutaimg, tallas }) {
+function ProductCard({ productoID, productName, sinStock, productType, precio, precio_anterior, rutaimg }) {
   const { carritoItems, setCarritoItems } = useContext(AppContext);
   const navigate = useNavigate();
-
-  useEffect(() => {
-    localStorage.setItem("carritoItems", JSON.stringify(carritoItems));
-  }, [carritoItems]);
 
   // Agregar a la cesta
   const handleProductClicked = (e) => {
     e.stopPropagation();
     navigate("/producto/" + productoID);
   }
-
-  useEffect(() => {
-    localStorage.setItem("carritoItems", JSON.stringify(carritoItems));
-  }, [carritoItems]);
 
   return (
     <div className="product-item" onClick={handleProductClicked}>
@@ -28,7 +20,6 @@ function ProductCard({ productoID, productName, sinStock, productType, precio, p
         {precio_anterior > 0 && <div className="sale">REBAJADO!</div>}
         <a href="#" className="action"><i className="icon-heart"></i></a>
         <p>
-          {/* <img src={`src/assets/img0${productoID}.jpg`} alt="" /> */}
           <img src={rutaimg} alt="" />
         </p>
       </div>

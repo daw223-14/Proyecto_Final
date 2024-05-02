@@ -15,7 +15,7 @@ function Administrador() {
         rutaimg: "",
         precio_anterior: ""
     });
-    const [mensaje, setMensaje] = useState(""); 
+    const [mensaje, setMensaje] = useState("");
     const [productos, setProductos] = useState([]);
 
     const handleInputChange = (e) => {
@@ -32,10 +32,6 @@ function Administrador() {
         }
     };
 
-    useEffect(() => {
-        fetchData();
-    }, []);
-
     async function fetchData() {
         try {
             const response = await axios.get("/index.php");
@@ -45,6 +41,10 @@ function Administrador() {
             setProductos([]);
         }
     };
+
+    useEffect(() => {
+        fetchData();
+    }, []);
 
     async function agregarProducto(e) {
         e.preventDefault();
@@ -62,7 +62,7 @@ function Administrador() {
         }
     }
 
-    async function editarProducto(productoID){
+    async function editarProducto(productoID) {
         try {
             await axios.put(`./index.php?productoID= ${productoID}`, producto);
             setMensaje("Producto actulizado correctamente");
@@ -121,14 +121,14 @@ function Administrador() {
                 <h2>Administrar Productos</h2>
                 <form onSubmit={handleSubmit}>
                     <label htmlFor="nombre">Nombre: </label>
-                    <input 
-                        id="nombre" 
-                        type="text" 
-                        name="nombre" 
-                        value={producto.nombre} 
-                        onChange={handleInputChange} 
-                        required 
-                    />   
+                    <input
+                        id="nombre"
+                        type="text"
+                        name="nombre"
+                        value={producto.nombre}
+                        onChange={handleInputChange}
+                        required
+                    />
                     <div>
                         <label htmlFor="genero">Género</label>
                         <select
@@ -155,27 +155,27 @@ function Administrador() {
                         required
                     />
                     <label htmlFor="marca">Marca: </label>
-                    <input 
+                    <input
                         id="marca"
                         type="text"
-                        name="marca" 
-                        value={producto.marca} 
-                        onChange={handleInputChange} 
+                        name="marca"
+                        value={producto.marca}
+                        onChange={handleInputChange}
                     />
                     <label htmlFor="precio">Precio: </label>
                     <input
-                        id="precio" 
+                        id="precio"
                         type="number"
-                        name="precio" 
-                        value={producto.precio} 
-                        onChange={handleInputChange} 
+                        name="precio"
+                        value={producto.precio}
+                        onChange={handleInputChange}
                     />
                     <label htmlFor="cantidadVendido">Cantidad Vendido: </label>
                     <input
-                        id="cantidadVendido" 
+                        id="cantidadVendido"
                         type="number"
                         name="cantidadVendido"
-                        value={producto.cantidadVendido} 
+                        value={producto.cantidadVendido}
                         onChange={handleInputChange}
                     />
                     <label htmlFor="fechaAñadido">Fecha de añadido: </label>

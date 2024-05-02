@@ -9,6 +9,7 @@ function ProductPage() {
   const { productoID } = useParams();
   const [producto, setProducto] = useState([])
   const [imagen, setImagen] = useState([]);
+  const [selectedTalla, setSelectedTalla] = useState("");
   const { carritoItems, setCarritoItems } = useContext(AppContext);
   const productoEnCarrito = carritoItems.find((item) => item.productoID === productoID);
   const cantidadEnCarrito = productoEnCarrito ? productoEnCarrito.cantidad : 0;
@@ -26,20 +27,24 @@ function ProductPage() {
     }
   };
 
+  useEffect(() => {
+    fetchData();
+  }, []);
+
   const handleAddToCart = (e) => {
     e.stopPropagation();
-    const productoEnCarrito = carritoItems.find((item) => item.productoID === productoID);
+    const productoEnCarrito = carritoItems.find((item) => item.productoID === productoID && item.talla === selectedTalla);
 
     if (productoEnCarrito) {
-      setCarritoItems((prevCartItems) =>
-        prevCartItems.map((item) =>
-          item.productoID === productoID
-            ? { ...item, cantidad: item.cantidad + 1 }
-            : item
-        )
-      );
+      const productoIndex = carritoItems.findIndex((item) => item.productoID === productoID && item.talla === selectedTalla);
+      const updatedItems = [...carritoItems];
+      updatedItems[productoIndex] = {
+        ...updatedItems[productoIndex],
+        cantidad: updatedItems[productoIndex].cantidad + 1
+      };
+      setCarritoItems(updatedItems);
     } else {
-      const { nombre, genero, precio, precio_anterior, tallas } = producto;
+      const { nombre, genero, precio, precio_anterior, rutaimg } = producto;
       const productName = nombre;
       const productType = genero;
       setCarritoItems((prevCartItems) => [
@@ -50,16 +55,14 @@ function ProductPage() {
           productType,
           precio,
           precio_anterior,
-          tallas,
+          talla: selectedTalla,
+          rutaimg,
           cantidad: 1
         },
       ]);
     }
   };
 
-  useEffect(() => {
-    fetchData();
-  }, []);
   useEffect(() => {
     if (producto.productoID) {
       const productImages = Array.from({ length: 2 }, (_, index) => {
@@ -82,11 +85,8 @@ function ProductPage() {
     );
   };
 
-  const handleRemoveFromCart = (e) => {
-    e.stopPropagation();
-    setCarritoItems((prevCartItems) =>
-      prevCartItems.filter((item) => item.productoID !== productoID)
-    );
+  const handleTallaChange = (e) => {
+    setSelectedTalla(e.target.value);
   };
 
   return (
@@ -108,21 +108,20 @@ function ProductPage() {
                     <p className="product-desc_content-text">{producto.descripcion}</p>
                   </div>
                   <div className="">
-                      <label htmlFor="">Selecciona una talla:</label>
-                      <select id="tallaSelect">
-                        <option value="">Seleccionar</option>
-                        {producto.tallas && producto.tallas.map((talla) => (
-                          <option key={talla} value={talla}>
-                            {talla}
-                          </option>
-                        ))}
-                      </select>
-                    </div>
+                    <label htmlFor="">Selecciona una talla:</label>
+                    <select id="tallaSelect" value={selectedTalla} onChange={handleTallaChange}>
+                      <option value="">Seleccionar</option>
+                      {producto.tallas && producto.tallas.map((talla) => (
+                        <option key={talla} value={talla}>
+                          {talla}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
                   <div className="wishlist-cart">
                     <div className="product-page-btns">
                       <div className="product-page-add-remove">
                         <button onClick={handleAddToCart} type="submit" id="add-to-wishlist-btn">Añadir al carrito</button>
-                        <button onClick={handleRemoveFromCart} type="submit" id="add-to-wishlist-btn">Eliminar del carrito</button>
                       </div>
                       <div className="quantity-controls">
                         <div>

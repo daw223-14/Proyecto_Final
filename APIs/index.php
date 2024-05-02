@@ -26,8 +26,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
         $response['mensaje'] = 'Hubo un error';
     }
     $stmt->close();
-
-    
 }
 // Agregar un nuevo producto (operación de creación)
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
